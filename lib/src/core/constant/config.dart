@@ -23,4 +23,7 @@ class Config {
 
   /// Whether Sentry is enabled.
   bool get enableSentry => sentryDsn.isNotEmpty;
+
+  /// The base URL of the API.
+  String get baseUrl => 'https://pokeapi.co/api/v2/';
 }

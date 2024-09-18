@@ -1,5 +1,8 @@
+import 'package:pokemon/src/core/rest_client/rest_client.dart';
+import 'package:pokemon/src/feature/favourite/controller/favourite_controller.dart';
 import 'package:pokemon/src/feature/initialization/logic/composition_root.dart';
 import 'package:pokemon/src/feature/initialization/logic/error_tracking_manager.dart';
+import 'package:pokemon/src/feature/pokemons/controller/pokemons_controller.dart';
 import 'package:pokemon/src/feature/settings/bloc/app_settings_bloc.dart';
 
 /// {@template dependencies_container}
@@ -15,6 +18,9 @@ base class DependenciesContainer {
   const DependenciesContainer({
     required this.appSettingsBloc,
     required this.errorTrackingManager,
+    required this.restClient,
+    required this.pokemonsPreviewBloc,
+    required this.favouriteBloc,
   });
 
   /// [AppSettingsBloc] instance, used to manage theme and locale.
@@ -22,6 +28,15 @@ base class DependenciesContainer {
 
   /// [ErrorTrackingManager] instance, used to report errors.
   final ErrorTrackingManager errorTrackingManager;
+
+  /// [RestClient] instance, used to make HTTP requests.
+  final RestClient restClient;
+
+  ///[PokemonPreviewBloc] instance, used to manage pokemons preview.
+  final PokemonPreviewBloc pokemonsPreviewBloc;
+
+  /// [FavouriteBloc] instance, used to manage favourite pokemons.
+  final FavouriteBloc favouriteBloc;
 }
 
 /// {@template testing_dependencies_container}

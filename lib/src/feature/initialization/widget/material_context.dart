@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/src/core/constant/localization/localization.dart';
-import 'package:pokemon/src/feature/home/widget/home_screen.dart';
 import 'package:pokemon/src/feature/initialization/model/app_theme.dart';
+import 'package:pokemon/src/feature/pokemons/widget/pokemos_screen.dart';
 import 'package:pokemon/src/feature/settings/widget/settings_scope.dart';
 
 /// {@template material_context}
@@ -29,7 +29,7 @@ class MaterialContext extends StatelessWidget {
       locale: settings.locale,
       localizationsDelegates: Localization.localizationDelegates,
       supportedLocales: Localization.supportedLocales,
-      home: const HomeScreen(),
+      home: const PokemosScreen(),
       builder: (context, child) => MediaQuery(
         key: _globalKey,
         data: mediaQueryData.copyWith(

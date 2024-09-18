@@ -51,6 +51,13 @@ dependencies:
   mockito: ^5.4.4
   clock: ^1.1.1
 
+  # navigation
+  octopus: ^0.0.9
+
+  # models
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+
 dev_dependencies:
   # Testing
   flutter_test:

@@ -53,6 +53,10 @@ final class AppTheme with Diagnosticable {
     }
   }
 
+  AppTheme switchTheme() => AppTheme(
+      themeMode: switch (themeMode) { ThemeMode.dark => ThemeMode.light, _ => ThemeMode.dark },
+      seed: seed);
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

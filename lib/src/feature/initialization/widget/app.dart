@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/src/feature/favourite/widget/favourite_scope.dart';
+import 'package:pokemon/src/feature/pokemons/widget/pokemon_scope.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:pokemon/src/core/utils/layout/window_size.dart';
 import 'package:pokemon/src/feature/initialization/logic/composition_root.dart';
@@ -28,7 +30,11 @@ class App extends StatelessWidget {
           dependencies: result.dependencies,
           child: const SettingsScope(
             child: WindowSizeScope(
-              child: MaterialContext(),
+              child: PokemonScope(
+                child: FavouriteScope(
+                  child: MaterialContext(),
+                ),
+              ),
             ),
           ),
         ),

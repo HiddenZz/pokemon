@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon/src/feature/initialization/widget/dependencies_scope.dart';
 import 'package:pokemon/src/feature/settings/bloc/app_settings_bloc.dart';
@@ -16,6 +16,15 @@ class SettingsScope extends StatefulWidget {
 
   /// The child widget.
   final Widget child;
+
+  static void switchThemeModel(BuildContext context) {
+    final controller = of(context, listen: false);
+    final setting = controller.state.appSettings;
+
+    if (setting == null) return;
+    controller.add(AppSettingsEvent.updateAppSettings(
+        appSettings: setting.copyWith(appTheme: setting.appTheme?.switchTheme())));
+  }
 
   /// Get the [AppSettingsBloc] instance.
   static AppSettingsBloc of(
@@ -38,6 +47,12 @@ class SettingsScope extends StatefulWidget {
         : context.getInheritedWidgetOfExactType<_InheritedSettings>();
     return settingsScope!.settings ?? const AppSettings();
   }
+
+  static ThemeMode themeModeOf(
+    BuildContext context, {
+    bool listen = true,
+  }) =>
+      settingsOf(context, listen: listen).appTheme?.themeMode ?? ThemeMode.system;
 
   @override
   State<SettingsScope> createState() => _SettingsScopeState();

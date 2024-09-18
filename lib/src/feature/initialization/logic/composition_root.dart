@@ -1,4 +1,13 @@
 import 'package:clock/clock.dart';
+import 'package:flutter/material.dart';
+import 'package:pokemon/src/core/rest_client/rest_client.dart';
+import 'package:pokemon/src/feature/favourite/controller/favourite_controller.dart';
+import 'package:pokemon/src/feature/favourite/data/favourite_repository.dart';
+import 'package:pokemon/src/feature/initialization/model/app_theme.dart';
+import 'package:pokemon/src/feature/pokemons/controller/pokemons_controller.dart';
+import 'package:pokemon/src/feature/pokemons/data/pokemos_network_provider.dart';
+import 'package:pokemon/src/feature/pokemons/data/pokemos_repository.dart';
+import 'package:pokemon/src/feature/settings/model/app_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pokemon/src/core/constant/config.dart';
 import 'package:pokemon/src/core/utils/refined_logger.dart';
@@ -83,10 +92,15 @@ class DependenciesFactory extends AsyncFactory<DependenciesContainer> {
 
     final errorTrackingManager = await ErrorTrackingManagerFactory(config, logger).create();
     final settingsBloc = await SettingsBlocFactory(sharedPreferences).create();
-
+    final restClient = RestClientHttp(baseUrl: config.baseUrl);
+    final pokemonsPreviewBloc = PokemonPreviewBlocFactory(restClient).create();
+    final favouriteBloc = FavouriteBlocFactory(restClient).create();
     return DependenciesContainer(
       appSettingsBloc: settingsBloc,
       errorTrackingManager: errorTrackingManager,
+      restClient: restClient,
+      pokemonsPreviewBloc: pokemonsPreviewBloc,
+      favouriteBloc: favouriteBloc,
     );
   }
 }
@@ -136,8 +150,12 @@ class SettingsBlocFactory extends AsyncFactory<AppSettingsBloc> {
       datasource: AppSettingsDatasourceImpl(sharedPreferences: sharedPreferences),
     );
 
-    final appSettings = await appSettingsRepository.getAppSettings();
-    final initialState = AppSettingsState.idle(appSettings: appSettings);
+    final appSettings = (await appSettingsRepository.getAppSettings()) ?? AppSettings();
+    final initialState = AppSettingsState.idle(
+      appSettings: appSettings.copyWith(
+        appTheme: appSettings.appTheme ?? AppTheme(seed: Colors.blue, themeMode: ThemeMode.system),
+      ),
+    );
 
     return AppSettingsBloc(
       appSettingsRepository: appSettingsRepository,
@@ -169,4 +187,44 @@ final class CompositionResult {
       'dependencies: $dependencies, '
       'msSpent: $msSpent'
       ')';
+}
+
+///favourite factory
+/// {@template favourite_bloc_factory}
+/// Factory that creates an instance of [FavouriteBloc].
+/// {@endtemplate}
+///
+
+class FavouriteBlocFactory extends Factory<FavouriteBloc> {
+  /// {@macro favourite_bloc_factory}
+  FavouriteBlocFactory(this.restClient);
+
+  /// rest client for making http requests
+  final RestClient restClient;
+
+  @override
+  FavouriteBloc create() => FavouriteBloc(
+        favouriteRepository: FavouriteRepositoryImpl(),
+        initialState: const FavouriteState.idle(),
+      );
+}
+
+/// {@template pokemon_preview_bloc_factory}
+/// Factory that creates an instance of [PokemonPreviewBloc].
+/// {@endtemplate}
+
+class PokemonPreviewBlocFactory extends Factory<PokemonPreviewBloc> {
+  /// {@macro pokemon_preview_bloc_factory}
+  PokemonPreviewBlocFactory(this.restClient);
+
+  /// rest client for making http requests
+  final RestClient restClient;
+
+  @override
+  PokemonPreviewBloc create() => PokemonPreviewBloc(
+        pokemonPreviewRepository: PokemosRepositoryImpl(
+          networkDataProvider: PokemonsNetworkDataProviderImpl(client: restClient),
+        ),
+        initialState: const PokemosPreviewState.idle(),
+      );
 }
