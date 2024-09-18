@@ -1,4 +1,4 @@
-import 'package:sizzle_starter/src/feature/initialization/model/environment.dart';
+import 'package:pokemon/src/feature/initialization/model/environment.dart';
 
 /// Application configuration
 class Config {

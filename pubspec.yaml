@@ -1,4 +1,4 @@
-name: sizzle_starter
+name: pokemon
 description: >
   Highly scalable Flutter starter kit, designed with an optimal predefined structure  and inclusive of libraries that are widely applicable in numerous use cases. #magic___^_^___line
 # Prevent accidental publishing to pub.dev.
@@ -74,8 +74,8 @@ flutter:
   generate: true
 
   assets:
-  # Add assets from the images directory to the application.
-  - assets/images/
+    # Add assets from the images directory to the application.
+    - assets/images/
 
 flutter_gen:
   output: lib/src/core/constant/generated

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:sizzle_starter/src/core/utils/layout/window_size.dart';
-import 'package:sizzle_starter/src/feature/initialization/logic/composition_root.dart';
-import 'package:sizzle_starter/src/feature/initialization/widget/dependencies_scope.dart';
-import 'package:sizzle_starter/src/feature/initialization/widget/material_context.dart';
-import 'package:sizzle_starter/src/feature/settings/widget/settings_scope.dart';
+import 'package:pokemon/src/core/utils/layout/window_size.dart';
+import 'package:pokemon/src/feature/initialization/logic/composition_root.dart';
+import 'package:pokemon/src/feature/initialization/widget/dependencies_scope.dart';
+import 'package:pokemon/src/feature/initialization/widget/material_context.dart';
+import 'package:pokemon/src/feature/settings/widget/settings_scope.dart';
 
 /// {@template app}
 /// [App] is an entry point to the application.
