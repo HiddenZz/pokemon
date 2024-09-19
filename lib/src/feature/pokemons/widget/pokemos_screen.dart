@@ -26,33 +26,6 @@ class PokemosScreen extends StatefulWidget {
 
 /// State for widget PokemosScreen.
 class _PokemosScreenState extends State<PokemosScreen> {
-  /* #region Lifecycle */
-  @override
-  void initState() {
-    super.initState();
-    // Initial state initialization
-  }
-
-  @override
-  void didUpdateWidget(covariant PokemosScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
-  }
-
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
-
   @override
   Widget build(BuildContext context) => Scaffold(
         body: CustomScrollView(
@@ -60,7 +33,7 @@ class _PokemosScreenState extends State<PokemosScreen> {
             // --- App Bar --- //
             SliverAppBar(
               pinned: MediaQuery.sizeOf(context).height > 600,
-              title: Text('Pokemons Count ${PokemonScope.pokemonsOf(context).length}'),
+              title: const _AppBar(),
               leading: const SizedBox.shrink(),
               actions: <Widget>[
                 IconButton(
@@ -76,11 +49,19 @@ class _PokemosScreenState extends State<PokemosScreen> {
             // --- Scroll View --- //
             SliverPadding(
               padding: EdgeInsets.all(16),
-              sliver: _PokemonsGrideView(),
+              sliver: const _PokemonsGrideView(),
             ),
           ],
         ),
       );
+}
+
+class _AppBar extends StatelessWidget {
+  const _AppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) =>
+      Text('Pokemons Count ${PokemonScope.pokemonsOf(context).length}');
 }
 
 class _PokemonsGrideView extends StatelessWidget {
@@ -120,7 +101,6 @@ class _PokemonGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Card(
       clipBehavior: Clip.antiAlias,
       color: Theme.of(context).cardColor,

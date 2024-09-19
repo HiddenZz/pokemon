@@ -101,6 +101,7 @@ class DependenciesFactory extends AsyncFactory<DependenciesContainer> {
       restClient: restClient,
       pokemonsPreviewBloc: pokemonsPreviewBloc,
       favouriteBloc: favouriteBloc,
+      logger: logger,
     );
   }
 }

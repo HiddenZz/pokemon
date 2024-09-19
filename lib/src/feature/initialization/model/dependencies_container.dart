@@ -1,4 +1,5 @@
 import 'package:pokemon/src/core/rest_client/rest_client.dart';
+import 'package:pokemon/src/core/utils/refined_logger.dart';
 import 'package:pokemon/src/feature/favourite/controller/favourite_controller.dart';
 import 'package:pokemon/src/feature/initialization/logic/composition_root.dart';
 import 'package:pokemon/src/feature/initialization/logic/error_tracking_manager.dart';
@@ -21,6 +22,7 @@ base class DependenciesContainer {
     required this.restClient,
     required this.pokemonsPreviewBloc,
     required this.favouriteBloc,
+    required this.logger,
   });
 
   /// [AppSettingsBloc] instance, used to manage theme and locale.
@@ -37,6 +39,7 @@ base class DependenciesContainer {
 
   /// [FavouriteBloc] instance, used to manage favourite pokemons.
   final FavouriteBloc favouriteBloc;
+  final RefinedLogger logger;
 }
 
 /// {@template testing_dependencies_container}
